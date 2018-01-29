@@ -1,5 +1,37 @@
 # Logging into the secure cluster
 
+1. VPN Connection : 
+ - LINUX: 
+   > vpn connect anyconnect.missouri.edu
+   > # Comment : select "vsecure4" VPN
+   > ssh socialteam.gogginss@secure4.missouri.edu
+
+1.1 Data Location: 
+
+ls -alrt /group/socialteam/shared/phi_data
+
+## Useful Server Commands
+
+Go do the data directory: 
+> cd  /group/socialteam/shared/phi_data
+
+List all the files: 
+> ls  /group/socialteam/shared/phi_data
+
+List all the files in order of how recent they are, and with additional info like size and date: 
+> ls -lart  /group/socialteam/shared/phi_data
+
+Show the top row of the file
+> head -1  /group/socialteam/shared/phi_data/[file-name]
+
+SHow the top 10 rows of the file: 
+> head  /group/socialteam/shared/phi_data/[file-name]
+
+copy a file so you can add columns, etc. 
+> cp  /group/socialteam/shared/phi_data/[file-name]  /group/socialteam/shared/phi_data/[NEWFILE]
+
+make a new directory
+> mkdir  /group/socialteam/shared/phi_data/[new-directory-name]
 
 
 # Loading

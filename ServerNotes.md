@@ -3,7 +3,9 @@
 1. VPN Connection : 
  - LINUX: 
    > vpn connect anyconnect.missouri.edu
-   > -- Comment : select "vsecure4" VPN
+   
+    > -- Comment : select "vsecure4" VPN
+   
    > ssh socialteam.gogginss@secure4.missouri.edu
 
 1.1 Data Location: 

@@ -1,4 +1,4 @@
-rm(list=ls(all=TRUE))=
+rm(list=ls(all=TRUE))
 library(igraph)
 library(ggplot2)
 igraph.options(print.vertex.attributes = TRUE)

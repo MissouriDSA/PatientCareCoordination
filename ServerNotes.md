@@ -43,6 +43,7 @@ make a new directory
  - This just loads your path [socialteam.gogginss@src-login ~]$ module load R/R-3.3.1
 [socialteam.gogginss@src-login ~]$ echo $PATH
 /home/cluster/rcss-spack/opt/spack/linux-centos7-x86_64/gcc-4.8.5/R-3.3.1-y7hviwqorqpyeetllgchzoin4fzhprvb/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/socialteam.gogginss/.local/bin:/home/socialteam.gogginss/bin
+  - r/r-3.4.3 is an R version available, $ module load r/r-3.4.3 should work. 
 3. sinfo : provides cluster status (partition, nodes, state and name of nodes)
 4. srun -N3 -n3 -t 0-00:04:00 hostname (this is the worlds fastest ssh)
  - if the nodes are available, please grab them

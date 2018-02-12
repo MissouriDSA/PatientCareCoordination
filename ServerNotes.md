@@ -72,3 +72,6 @@ make a new directory
 8. Master data is here:
 
     `/group/socialteam/shared/masterdata_file`
+    
+*SLURM DOCS*: http://docs.rnet.missouri.edu/SLURM/slurm
+

@@ -1,14 +1,33 @@
 rm(list=ls(all=TRUE))
 library(igraph)
 library(ggplot2)
+library(xlsx)
+library(gdata)
 igraph.options(print.vertex.attributes = TRUE)
 igraph.options(print.edge.attributes = TRUE)
+
+df = read.xls("msg-center.xlsx", sheet = 1, header = TRUE)
 
 # setwd("~/GitHub/Group-Informatics/R-Code/Student Data - LASI 2016/CourseData-Provenance/SNA_Ready_mdl_forum_posts_scrubbed_csv")
 
 ### This is data about discussions
 ### Developer discussions only
-files <- system("ls msg-center*.csv",intern=T)
+files <- system("ls edge*.csv",intern=T)
+
+### Temp for testing file structure
+el <- read.table(files[1], header=TRUE, sep=",", dec=".", fill=TRUE)
+str(el)
+
+el$FROM_STAFF
+
+test <- read.xlsx
+
+
+
+#==========================
+
+
+#==========================
 
 for (i in 1:length(files)) {
   
@@ -20,13 +39,13 @@ for (i in 1:length(files)) {
   el <- read.table(files[i], header=TRUE, sep=",", dec=".", fill=TRUE)
   
   # based on variable values
-  subsetEL <- el[ which(el$class_course_id == 55113),] 
+#  subsetEL <- el[ which(el$class_course_id == 55113),] 
   
   #	subsetEL <- subset(el, class_course_id = 40491, select= c(userid_from, userid_to,  id,created, class_course_id))	
   #	subsetEL <- subset(el, class_course_id = c(40491, 51891, 55113, 55290)) 	
   #	subsetEL <- subset(el, class_course_id == 40491 || class_course_id == 51891)
   #or       
-  el <- subsetEL
+ subsetEL <- el
   
   ## This graph is directed
   disAll <-graph.data.frame(el, directed=TRUE)
@@ -64,7 +83,7 @@ for (i in 1:length(files)) {
   layout_with_sugiyama(g)
   
   #output the file
-  filename=paste("../../output/","community",i,"b2.pdf")
+  filename=paste("community",i,"b2.pdf")
   pdf(filename)
   #plot.igraph(g)
   plot(g, vertex.label.dist=.5, vertex.label.cex=.7, vertex.label.color="black",

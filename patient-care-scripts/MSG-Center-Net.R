@@ -1,70 +1,68 @@
 rm(list=ls(all=TRUE))
 library(igraph)
 library(ggplot2)
-library(xlsx)
+#library(xlsx)
 library(gdata)
 igraph.options(print.vertex.attributes = TRUE)
 igraph.options(print.edge.attributes = TRUE)
 
-df = read.xls("msg-center.xlsx", sheet = 1, header = TRUE)
 
-# setwd("~/GitHub/Group-Informatics/R-Code/Student Data - LASI 2016/CourseData-Provenance/SNA_Ready_mdl_forum_posts_scrubbed_csv")
 
-### This is data about discussions
+## Read the first tab of the spreadsheet with no message text in
+df = read.xls("msg-center-no-message.xlsx", sheet = 1, header = TRUE)
+##Make the FIN variable a factor so we get a count
+df$finfactor <- as.factor(df$FIN)
+
+## Repeat for the rest of the spreadsheet tabs. 
+df2 = read.xls("msg-center-no-message.xlsx", sheet = 2, header = TRUE)
+df2$finfactor <- as.factor(df2$FIN)
+twodf <- rbind(df, df2)
+
+df3 = read.xls("msg-center-no-message.xlsx", sheet = 3, header = TRUE)
+df3$finfactor <- as.factor(df3$FIN)
+threedf <- rbind(twodf, df3)
+
+df4 = read.xls("msg-center-no-message.xlsx", sheet = 4, header = TRUE)
+df4$finfactor <- as.factor(df4$FIN)
+fourdf <- rbind(threedf, df4)
+
 ### Developer discussions only
 files <- system("ls edge*.csv",intern=T)
 
 ### Temp for testing file structure
-el <- read.table(files[1], header=TRUE, sep=",", dec=".", fill=TRUE)
-str(el)
+# el <- read.table(files[1], header=TRUE, sep=",", dec=".", fill=TRUE)
+# str(el)
+el <- fourdf
 
-el$FROM_STAFF
-
-test <- read.xlsx
-
-
-
-#==========================
-
-
-#==========================
+## This reorders the data frame columns to put the "From and To" 
+## into the first two columns, which iGraph needs
+data <- el[c(6,7,1,2,3,4,5,8,9,10,11,12,13,14)]
+el <- data
 
 for (i in 1:length(files)) {
-  
   i = 1
   fileNamer = as.character(i)
-  #Import the files
-  #	el <- read.table(files[i], header=TRUE, dec=".", fill=TRUE)
-  # for a comma seperated file, you just add in the parameter "sep=","" 
-  el <- read.table(files[i], header=TRUE, sep=",", dec=".", fill=TRUE)
+  # circumventing the loop right here.
+  el <- data
   
+  # THIS IS HOW YOU WOULD FILTER ALL THE NETWORKS
+  # subsetEL <- el
   # based on variable values
-#  subsetEL <- el[ which(el$class_course_id == 55113),] 
-  
-  #	subsetEL <- subset(el, class_course_id = 40491, select= c(userid_from, userid_to,  id,created, class_course_id))	
-  #	subsetEL <- subset(el, class_course_id = c(40491, 51891, 55113, 55290)) 	
-  #	subsetEL <- subset(el, class_course_id == 40491 || class_course_id == 51891)
-  #or       
- subsetEL <- el
+  # subsetEL <- el[ which(el$MRN == "00-00-02-72-1"),] 
+    subsetEL <- el[which(el$FROM_STAFF == "Ortbals RN, Jeanne M"),]
+  # subsetEL <- el
   
   ## This graph is directed
-  disAll <-graph.data.frame(el, directed=TRUE)
+  disAll <-graph.data.frame(subsetEL, directed=TRUE)
   
   V(disAll)$label <- V(disAll)$name
-  # layout.fruchterman.reingold
-  # until now, I have obfuscated the process of weighting data by
-  # including data sets that are already weighted 
-  
-  # layout.kamada.kawai(disAll, weights=E(disAll)$weight)
-  # for an undirected graph
-  # layout_with_kk(disAll)
-  
+
   layout_with_sugiyama(disAll)
   
   # weights not calculated yet
   # E(disAll)$width <- E(disAll)$weight/25
   
-  E(disAll)$arrow.size <-0.4
+  E(disAll)$arrow.size <-0.2
   
   #	layout.spring(disAll,weights=E(disAll)$weight)
   
@@ -76,18 +74,20 @@ for (i in 1:length(files)) {
     com <- spinglass.community(g, spins=8)
     V(g)$color <- com$membership+1
   }
-  
-  # This seems redundent 
-  # g <- set.graph.attribute(g, "layout", layout.kamada.kawai(g))
-  
+
   layout_with_sugiyama(g)
   
   #output the file
   filename=paste("community",i,"b2.pdf")
   pdf(filename)
-  #plot.igraph(g)
-  plot(g, vertex.label.dist=.5, vertex.label.cex=.7, vertex.label.color="black",
+  plot(g, vertex.label.dist=.5, vertex.label.cex=.3, vertex.label.color="black",
        vertex.frame.color="white")
   dev.off()
 }
 
+
+## Post processing of filtered graph calculations
+V(g)
+degreed<-as.data.frame(degree(g))
+vertex(g)
+plot(g)

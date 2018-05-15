@@ -26,12 +26,6 @@ df4 = read.xls("msg-center-no-message.xlsx", sheet = 4, header = TRUE)
 df4$finfactor <- as.factor(df4$FIN)
 fourdf <- rbind(threedf, df4)
 
-### Developer discussions only
-# files <- system("ls edge*.csv",intern=T)
-
-### Temp for testing file structure
-# el <- read.table(files[1], header=TRUE, sep=",", dec=".", fill=TRUE)
-# str(el)
 el <- fourdf
 
 ## This reorders the data frame columns to put the "From and To" 
@@ -39,20 +33,14 @@ el <- fourdf
 data <- el[c(6,7,1,2,3,4,5,8,9,10,11,12,13,14)]
 el <- data
 
-# for (i in 1:length(files)) {
-#   i = 1
-#   fileNamer = as.character(i)
-#   # circumventing the loop right here.
-#   el <- data
-  
   # THIS IS HOW YOU WOULD FILTER ALL THE NETWORKS
   # subsetEL <- el
   # based on variable values
 
-#To build the networks for individual MRN's apply a filter like this
+  #To build the networks for individual MRN's apply a filter like this
   # subsetEL <- el[ which(el$MRN == "00-00-02-72-1"),] 
 
-#To build networks for a particular staff member, do something like this
+  #To build networks for a particular staff member, do something like this
     subsetEL <- el[which(el$FROM_STAFF == "Ortbals RN, Jeanne M"),]
 
   # subsetEL <- el
@@ -83,16 +71,53 @@ el <- data
   layout_with_sugiyama(g)
   
   #output the file
+  i=1
   filename=paste("community",i,"b2.pdf")
   pdf(filename)
   plot(g, vertex.label.dist=.5, vertex.label.cex=.3, vertex.label.color="black",
        vertex.frame.color="white")
   dev.off()
-# }
 
-
+  
 ## Post processing of filtered graph calculations
 V(g)
 degreed<-as.data.frame(degree(g))
 vertex(g)
 plot(g)
+
+
+### Looking at communication across the entire network
+MSGCenterAll <-graph.data.frame(el, directed=TRUE)
+i=2
+E(MSGCenterAll)$arrow.size <-0.2
+
+# size of sphere calculated based on the betweenness value
+V(MSGCenterAll)$size <-(3+sqrt(sqrt(betweenness(MSGCenterAll, v=V(MSGCenterAll)))))
+
+filename=paste("community",i,"b2.pdf")
+pdf(filename)
+plot(MSGCenterAll, vertex.label.dist=.5, 
+     vertex.label.cex=.3, 
+     width=32,
+     height=32,
+     vertex.label.color="black",
+     vertex.frame.color="white")
+dev.off()
+
+
+## Post processing of filtered graph calculations
+V(MSGCenterAll)
+degreed<-as.data.frame(degree(MSGCenterAll))
+vertex(MSGCenterAll)
+plot(MSGCenterAll)
+
+#describing the dataset
+
+NROW(el)
+NROW(fourdf)
+NROW(threedf)
+NROW(twodf)
+NROW(df)
+summary(el)
+
+

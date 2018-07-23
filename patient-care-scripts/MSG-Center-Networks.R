@@ -104,6 +104,17 @@ plot(MSGCenterAll, vertex.label.dist=.5,
      vertex.frame.color="white")
 dev.off()
 
+filename=paste("community",i,"b3.pdf")
+pdf(filename)
+plot(subsetEL, vertex.label.dist=.5, 
+     vertex.label.cex=.3, 
+     width=32,
+     height=32,
+     vertex.label.color="black",
+     vertex.frame.color="white")
+dev.off()
+
+
 
 ## Post processing of filtered graph calculations
 V(MSGCenterAll)

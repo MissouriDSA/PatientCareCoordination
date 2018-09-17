@@ -41,4 +41,5 @@ testThree <- testThree[which(testThree$freq < 103), ]
 
 testThree <- sort(testThree$freq, decreasing = FALSE)
 plot(testThree)
-
+NROW(testThree)
+## 559 is the result I get, you might get a different result when you read your file .... lets not worry about that right now. 

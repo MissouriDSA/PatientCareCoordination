@@ -34,3 +34,11 @@ sixLevel <- sort(testone$freq, decreasing = FALSE)
 
 NROW(sixLevel)
 plot(sixLevel)
+
+
+testThree <- distributionDF[which(distributionDF$freq > 6), ]
+testThree <- testThree[which(testThree$freq < 103), ]
+
+testThree <- sort(testThree$freq, decreasing = FALSE)
+plot(testThree)
+

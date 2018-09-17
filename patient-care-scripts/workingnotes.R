@@ -25,3 +25,12 @@ summary(new)
 testone <- distributionDF[which(distributionDF$freq > 4)]
 testone <- distributionDF[which(distributionDF$freq > 4),]
 plot(testone)
+
+testone <- distributionDF[which(distributionDF$freq > 6),]
+
+
+sort(testone$freq, decreasing = FALSE)
+sixLevel <- sort(testone$freq, decreasing = FALSE)
+
+NROW(sixLevel)
+plot(sixLevel)

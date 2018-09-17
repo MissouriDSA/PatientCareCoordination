@@ -26,7 +26,9 @@ df4 = read.xls("msg-center-no-message.xlsx", sheet = 4, header = TRUE)
 df4$finfactor <- as.factor(df4$FIN)
 fourdf <- rbind(threedf, df4)
 
-el <- fourdf
+# el <- fourdf
+
+el <- df
 
 ## This reorders the data frame columns to put the "From and To" 
 ## into the first two columns, which iGraph needs

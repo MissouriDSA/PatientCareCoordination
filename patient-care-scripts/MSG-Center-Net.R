@@ -3,8 +3,8 @@ library(igraph)
 library(ggplot2)
 #library(xlsx)
 library(gdata)
-igraph.options(print.vertex.attributes = TRUE)
-igraph.options(print.edge.attributes = TRUE)
+#igraph.options(print.vertex.attributes = TRUE)
+#igraph.options(print.edge.attributes = TRUE)
 
 
 

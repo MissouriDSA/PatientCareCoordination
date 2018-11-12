@@ -1,12 +1,11 @@
 rm(list=ls(all=TRUE))
 library(igraph)
+library(plyr)
 library(ggplot2)
 #library(xlsx)
 library(gdata)
 igraph.options(print.vertex.attributes = TRUE)
 igraph.options(print.edge.attributes = TRUE)
-
-
 
 ## Read the first tab of the spreadsheet with no message text in
 df = read.xls("msg-center-no-message.xlsx", sheet = 1, header = TRUE)
@@ -26,7 +25,9 @@ df4 = read.xls("msg-center-no-message.xlsx", sheet = 4, header = TRUE)
 df4$finfactor <- as.factor(df4$FIN)
 fourdf <- rbind(threedf, df4)
 
-# el <- fourdf
+#count(fourdf, MRN)
+
+el <- fourdf
 
 el <- df
 
@@ -43,7 +44,7 @@ el <- data
   # subsetEL <- el[ which(el$MRN == "00-00-02-72-1"),] 
 
   #To build networks for a particular staff member, do something like this
-    subsetEL <- el[which(el$FROM_STAFF == "Ortbals RN, Jeanne M"),]
+    subsetEL <- el[which(el$FROM_STAFF == "Alioto RN, Armine A"),]
 
   # subsetEL <- el
   
@@ -86,7 +87,7 @@ V(g)
 degreed<-as.data.frame(degree(g))
 vertex(g)
 plot(g)
-
+#STOP HERE FOR INDIVIDUAL NETWORK
 
 ### Looking at communication across the entire network
 MSGCenterAll <-graph.data.frame(el, directed=TRUE)
